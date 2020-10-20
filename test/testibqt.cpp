@@ -15,10 +15,22 @@ void TestIbQt::run()
    // reqContractDetails();
 
     Contract c;
-    Order o;
+    c.symbol = QByteArray("MSFT");
+    c.secType = QByteArray("STK");
+    c.exchange = QByteArray("SMART");
+    c.currency = QByteArray("USD");
+
+
     OrderState os;
 
-    ib.openOrder(0,c,o,os);
+    Order order;
+      order.action = "BUY";
+      order.orderType = "MKT";
+      order.transmit = 1;
+      order.totalQuantity = 10 ;
+
+
+    ib.openOrder(0,c,order,os);
 
 }
 
