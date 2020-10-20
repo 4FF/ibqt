@@ -12,7 +12,14 @@ TestIbQt::TestIbQt(QObject *parent) : QObject(parent)
 void TestIbQt::run()
 {
     ib.connectToTWS();
-    reqContractDetails();
+   // reqContractDetails();
+
+    Contract c;
+    Order o;
+    OrderState os;
+
+    ib.openOrder(0,c,o,os);
+
 }
 
 void TestIbQt::onTwsConnected()
