@@ -20,4 +20,3 @@ struct BarData {
 };
 
 #endif // IBBARDATA_H
-

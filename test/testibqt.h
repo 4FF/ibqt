@@ -10,6 +10,14 @@ class TestIbQt : public QObject
 public:
     explicit TestIbQt(QObject *parent = 0);
 
+
+    //orders
+    void marketOrder(char dir,QByteArray stockName,int quantity);
+
+
+
+
+
 public slots:
     void run();
 
@@ -18,11 +26,10 @@ private slots:
     void onManagedAccounts(const QByteArray & accountsList);
     void onContractDetails(int reqId, const ContractDetails & contractDetails);
     void onContractDetailsEnd(int reqId);
-
+    void nextValidIdNew(OrderId Id);
 private:
     IBQt ib;
 
-    void reqContractDetails();
 };
 
 #endif // TESTIBQT_H

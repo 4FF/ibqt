@@ -49,7 +49,9 @@ public:
     // NOT API SPECIFIC
     TickerId getTickerId() { return m_tickerId++; }
     OrderId  getOrderId();
-    void    setOrderId(long orderId) { m_orderId = orderId; }
+    void    setOrderId(long orderId) {
+        m_orderId = orderId;
+    }
 
 
     // CONNECTION AND SERVER

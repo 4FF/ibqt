@@ -7,13 +7,36 @@ TestIbQt::TestIbQt(QObject *parent) : QObject(parent)
     connect(&ib, SIGNAL(managedAccounts(QByteArray)), this, SLOT(onManagedAccounts(QByteArray)));
     connect(&ib, SIGNAL(contractDetails(int,ContractDetails)), this, SLOT(onContractDetails(int,ContractDetails)));
     connect(&ib, SIGNAL(contractDetailsEnd(int)), this, SLOT(onContractDetailsEnd(int)));
+    connect(&ib, SIGNAL(nextValidId(long)), this, SLOT(nextValidIdNew(long)));
+
+}
+
+void TestIbQt::marketOrder(char dir, QByteArray stockName, int quantity)
+{
+    qDebug() << "orderTest";
+    Contract c;
+    c.symbol = stockName;
+    c.secType = QByteArray("STK");
+    c.exchange = QByteArray("SMART");
+    c.currency = QByteArray("USD");
+
+    Order order;
+    if(dir==1){
+        order.action = "BUY";
+    }else if(dir==-1){
+        order.action = "SELL";
+    }
+
+      order.orderType = "MKT";
+      order.totalQuantity = quantity;
+
+    ib.placeOrder(ib.getOrderId(),c,order);
+
 }
 
 void TestIbQt::run()
 {
     ib.connectToTWS();
-    reqContractDetails();
-
 
 }
 
@@ -38,24 +61,10 @@ void TestIbQt::onContractDetailsEnd(int reqId)
     qDebug() << "onContractDetailsEnd:" << reqId;
 }
 
-void TestIbQt::reqContractDetails()
+
+void TestIbQt::nextValidIdNew(OrderId Id)
 {
-    qDebug() << "orderTest";
-    Contract c;
-    c.symbol = QByteArray("AAPL");
-    c.secType = QByteArray("STK");
-    c.exchange = QByteArray("SMART");
-    c.currency = QByteArray("USD");
-
-    Order order;
-      order.action = "BUY";
-      order.orderType = "MKT";
-      order.transmit = 1;
-      order.totalQuantity = 100 ;
-
-
-    ib.placeOrder(NEXT_VALID_ID,c,order);
-
-
-
+     ib.setOrderId(Id);
+     qDebug() << "nextValidIdInitialization:" << Id;
 }
+
