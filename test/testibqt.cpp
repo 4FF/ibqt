@@ -12,25 +12,8 @@ TestIbQt::TestIbQt(QObject *parent) : QObject(parent)
 void TestIbQt::run()
 {
     ib.connectToTWS();
-   // reqContractDetails();
+    reqContractDetails();
 
-    Contract c;
-    c.symbol = QByteArray("MSFT");
-    c.secType = QByteArray("STK");
-    c.exchange = QByteArray("SMART");
-    c.currency = QByteArray("USD");
-
-
-    OrderState os;
-
-    Order order;
-      order.action = "BUY";
-      order.orderType = "MKT";
-      order.transmit = 1;
-      order.totalQuantity = 10 ;
-
-
-    ib.openOrder(0,c,order,os);
 
 }
 
@@ -57,11 +40,22 @@ void TestIbQt::onContractDetailsEnd(int reqId)
 
 void TestIbQt::reqContractDetails()
 {
+    qDebug() << "orderTest";
     Contract c;
-    c.symbol = QByteArray("MSFT");
-    c.secType = QByteArray("OPT");
+    c.symbol = QByteArray("AAPL");
+    c.secType = QByteArray("STK");
     c.exchange = QByteArray("SMART");
     c.currency = QByteArray("USD");
 
-    ib.reqContractDetails(ib.getTickerId(), c);
+    Order order;
+      order.action = "BUY";
+      order.orderType = "MKT";
+      order.transmit = 1;
+      order.totalQuantity = 100 ;
+
+
+    ib.placeOrder(NEXT_VALID_ID,c,order);
+
+
+
 }
